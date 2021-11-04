@@ -18,15 +18,11 @@ const nutritionFacts = [
   },
   {
     label: "APR",
-    value: 5.475,
+    value: "1,825",
   },
   {
     label: "Dev Fee",
     value: 2,
-  },
-  {
-    label: "Referrals Bonus",
-    value: 12,
   },
 ];
 

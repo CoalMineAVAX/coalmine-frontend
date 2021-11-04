@@ -8,13 +8,13 @@ import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
 import { styled } from "@mui/system";
 import { useLocation } from "react-router-dom";
+import Web3 from "web3";
 
 import PriceInput from "../../components/PriceInput";
 import { useContractContext } from "../../providers/ContractProvider";
 import { useAuthContext } from "../../providers/AuthProvider";
 import { useEffect, useState } from "react";
 import { config } from "../../config";
-import Web3 from "web3";
 
 const CardWrapper = styled(Card)({
   background: "rgb(251 241 225)",
@@ -40,9 +40,12 @@ function useQuery() {
 export default function BakeCard() {
   const { contract, wrongNetwork, getBnbBalance, fromWei, toWei, web3 } =
     useContractContext();
-  const { address } = useAuthContext();
+  const { address, chainId } = useAuthContext();
   const [contractBNB, setContractBNB] = useState(0);
-  const [walletBNB, setWalletBNB] = useState(0);
+  const [walletBalance, setWalletBalance] = useState({
+    bnb: 0,
+    beans: 0,
+  });
   const [bakeBNB, setBakeBNB] = useState(0);
   const [calculatedBeans, setCalculatedBeans] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -58,23 +61,40 @@ export default function BakeCard() {
     });
   };
 
-  const fetchWalletBNBBalance = () => {
+  const fetchWalletBalance = async () => {
     if (!web3 || wrongNetwork || !address) {
-      setWalletBNB(0);
+      setWalletBalance({
+        bnb: 0,
+        beans: 0,
+      });
       return;
     }
-    getBnbBalance(address).then((amount) => {
-      setWalletBNB(fromWei(amount));
-    });
+
+    try {
+      const [bnbAmount, beansAmount] = await Promise.all([
+        getBnbBalance(address),
+        contract.methods.getMyBeans().call(),
+      ]);
+      setWalletBalance({
+        bnb: fromWei(`${bnbAmount}`),
+        beans: fromWei(`${beansAmount}`),
+      });
+    } catch (err) {
+      console.error(err);
+      setWalletBalance({
+        bnb: 0,
+        beans: 0,
+      });
+    }
   };
 
   useEffect(() => {
     fetchContractBNBBalance();
-  }, [web3]);
+  }, [web3, chainId]);
 
   useEffect(() => {
-    fetchWalletBNBBalance();
-  }, [address, web3]);
+    fetchWalletBalance();
+  }, [address, web3, chainId]);
 
   const onUpdateBakeBNB = (value) => {
     setBakeBNB(value);
@@ -115,7 +135,7 @@ export default function BakeCard() {
     } catch (err) {
       console.error(err);
     }
-    fetchWalletBNBBalance();
+    fetchWalletBalance();
     fetchContractBNBBalance();
     setLoading(false);
   };
@@ -145,7 +165,7 @@ export default function BakeCard() {
     } catch (err) {
       console.error(err);
     }
-    fetchWalletBNBBalance();
+    fetchWalletBalance();
     fetchContractBNBBalance();
     setLoading(false);
   };
@@ -154,24 +174,37 @@ export default function BakeCard() {
     <CardWrapper>
       {loading && <LinearProgress color="secondary" />}
       <CardContent>
-        <Grid paddingTop={3} container justifyContent="space-around">
-          <Grid item textAlign="center">
-            <Typography variant="body1" gutterBottom>
-              Contract
-            </Typography>
-            <Typography variant="h5">{contractBNB} BNB</Typography>
-          </Grid>
-          <Grid item textAlign="center">
-            <Typography variant="body1" gutterBottom>
-              Wallet
-            </Typography>
-            <Typography variant="h5">{walletBNB} BNB</Typography>
-          </Grid>
+        <Grid
+          container
+          justifyContent="space-between"
+          alignItems="center"
+          mt={3}
+        >
+          <Typography variant="body1">Contract</Typography>
+          <Typography variant="h5">{contractBNB} BNB</Typography>
         </Grid>
-        <Box paddingX={3} paddingTop={4} paddingBottom={3}>
+        <Grid
+          container
+          justifyContent="space-between"
+          alignItems="center"
+          mt={3}
+        >
+          <Typography variant="body1">Wallet</Typography>
+          <Typography variant="h5">{walletBalance.bnb} BNB</Typography>
+        </Grid>
+        <Grid
+          container
+          justifyContent="space-between"
+          alignItems="center"
+          mt={3}
+        >
+          <Typography variant="body1">Your Beans</Typography>
+          <Typography variant="h5">{walletBalance.beans} BEANS</Typography>
+        </Grid>
+        <Box paddingTop={4} paddingBottom={3}>
           <Box>
             <PriceInput
-              max={+walletBNB}
+              max={+walletBalance.bnb}
               value={bakeBNB}
               onChange={(value) => onUpdateBakeBNB(value)}
             />

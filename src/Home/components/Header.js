@@ -7,7 +7,7 @@ const Wrapper = styled("div")(({ theme }) => ({
   textAlign: "center",
   paddingBottom: 24,
   [theme.breakpoints.down("md")]: {
-    h4: {
+    h5: {
       fontSize: 20,
       margin: 0,
     },
@@ -19,7 +19,7 @@ export default function Header() {
     <Wrapper>
       <img src={logo} alt="" width={"100%"} style={{ marginTop: -48 }} />
       <Connect responsive={false} />
-      <Typography variant="h4" marginTop={-6} marginX="-90px">
+      <Typography variant="h6" marginTop={-3}>
         The BNB Miner with the yummiest daily return and lowest dev fee
       </Typography>
     </Wrapper>
