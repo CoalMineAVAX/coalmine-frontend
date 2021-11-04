@@ -6,6 +6,7 @@ import BakeCard from "./components/BakeCard";
 import NutritionFacts from "./components/NutritionFacts";
 import ReferralLink from "./components/ReferralLink";
 import { useAuthContext } from "../providers/AuthProvider";
+import Footer from "./components/Footer";
 
 const Wrapper = styled("div")(({ theme }) => ({
   maxWidth: 400,
@@ -26,6 +27,7 @@ export default function Home() {
       <BakeCard />
       <NutritionFacts />
       <ReferralLink address={address} />
+      <Footer />
     </Wrapper>
   );
 }

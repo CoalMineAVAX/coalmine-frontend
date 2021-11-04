@@ -7,13 +7,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import ThemeProvider from "./Theme";
 import { AuthProvider } from "./providers/AuthProvider";
+import { ContractProvider } from "./providers/ContractProvider";
 
 ReactDOM.render(
   <React.StrictMode>
     <CssBaseline />
     <ThemeProvider>
       <AuthProvider>
-        <App />
+        <ContractProvider>
+          <App />
+        </ContractProvider>
       </AuthProvider>
     </ThemeProvider>
   </React.StrictMode>,

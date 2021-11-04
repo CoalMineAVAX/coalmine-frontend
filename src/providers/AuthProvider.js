@@ -16,13 +16,19 @@ export const AuthContext = createContext({
   connect: () => null,
   loading: false,
   disconnect: () => null,
+  chainId: null,
+  setSnackbar: () => null,
 });
 
 const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider, // required
     options: {
-      infuraId: "1c1e5c3de2164a0ea9e3a2a8a1fedcb0", // required
+      rpc: {
+        56: "https://bsc-dataseed.binance.org/",
+        97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
+      },
+      network: "binance",
     },
   },
 };
@@ -32,7 +38,6 @@ const Alert = forwardRef((props, ref) => {
 });
 
 const web3Modal = new Web3Modal({
-  network: "mainnet", // optional
   cacheProvider: true, // optional
   providerOptions, // required
 });
@@ -41,6 +46,7 @@ export const AuthProvider = ({ children }) => {
   const [address, setAddress] = useState();
   const [loading, setLoading] = useState(false);
   const [snackbar, setSnackbar] = useState(null);
+  const [chainId, setChainId] = useState(null);
 
   const subscribeProvider = (provider) => {
     provider.on("disconnect", (error) => {
@@ -59,11 +65,7 @@ export const AuthProvider = ({ children }) => {
     });
     // Subscribe to chainId change
     provider.on("chainChanged", (chainId) => {
-      console.log(chainId);
-      setSnackbar({
-        type: "info",
-        message: "Network Changed",
-      });
+      setChainId(chainId);
     });
   };
 
@@ -88,7 +90,9 @@ export const AuthProvider = ({ children }) => {
       subscribeProvider(provider);
 
       const accounts = await web3.eth.getAccounts();
+      const chain = await web3.eth.getChainId();
       setAddress(accounts[0]);
+      setChainId(chain);
     } catch (err) {
       console.error(err);
       setSnackbar({
@@ -102,6 +106,7 @@ export const AuthProvider = ({ children }) => {
   const disconnect = () => {
     web3Modal.clearCachedProvider();
     setAddress(null);
+    setChainId(null);
   };
 
   const handleClose = (event, reason) => {
@@ -119,7 +124,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ address, loading, connect, disconnect }}>
+    <AuthContext.Provider
+      value={{ address, loading, connect, disconnect, chainId, setSnackbar }}
+    >
       {children}
       {snackbar && (
         <Snackbar

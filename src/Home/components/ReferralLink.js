@@ -21,7 +21,7 @@ const Input = styled("input")(({ theme }) => ({
 }));
 
 export default function ReferralLink({ address }) {
-  const link = `https://bakedbeans.io?ref=${address}`;
+  const link = `${window.origin}?ref=${address}`;
 
   return (
     <CardWrapper>

@@ -12,12 +12,23 @@ const BnbInput = styled("input")({
   background: "white",
   width: "100%",
   outline: "none",
+  "&::-webkit-outer-spin-button, &::-webkit-inner-spin-button": {
+    WebkitAppearance: "none",
+    margin: 0,
+    MozAppearance: "textfield",
+  },
 });
 
-export default function PriceInput({ value, onChange = () => {} }) {
+export default function PriceInput({ value, max, onChange = () => {} }) {
   return (
     <Box position="relative">
-      <BnbInput value={value} onChange={(e) => onChange(e.target.value)} />
+      <BnbInput
+        type="number"
+        min={0}
+        max={max}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
       <Typography
         fontSize={24}
         position="absolute"
