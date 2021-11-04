@@ -11,7 +11,6 @@ import Footer from "./components/Footer";
 const Wrapper = styled("div")(({ theme }) => ({
   maxWidth: 400,
   margin: "0 auto",
-  position: "relative",
   [theme.breakpoints.down("sm")]: {
     maxWidth: "100%",
   },

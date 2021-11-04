@@ -51,10 +51,8 @@ export const AuthProvider = ({ children }) => {
   const subscribeProvider = (provider) => {
     provider.on("disconnect", (error) => {
       console.log(error);
-      setSnackbar({
-        type: "info",
-        message: "Disconnected!",
-      });
+      setChainId(null);
+      setAddress(null);
     });
     provider.on("accountsChanged", (accounts) => {
       setAddress(accounts[0]);

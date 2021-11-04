@@ -21,6 +21,16 @@ const CardWrapper = styled(Card)({
   marginBottom: 24,
 });
 
+const ButtonContainer = styled(Grid)(({ theme }) => ({
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+    "> div": {
+      marginLeft: 0,
+      marginRight: 0,
+    },
+  },
+}));
+
 let timeout = null;
 
 function useQuery() {
@@ -166,7 +176,7 @@ export default function BakeCard() {
               onChange={(value) => onUpdateBakeBNB(value)}
             />
           </Box>
-          <Box marginY={3}>
+          <Box marginTop={3}>
             <Button
               variant="contained"
               fullWidth
@@ -176,8 +186,8 @@ export default function BakeCard() {
               BAKE {calculatedBeans} BEANS
             </Button>
           </Box>
-          <Grid container>
-            <Grid item flexGrow={1} marginRight={1}>
+          <ButtonContainer container>
+            <Grid item flexGrow={1} marginRight={1} marginTop={3}>
               <Button
                 variant="contained"
                 color="secondary"
@@ -188,7 +198,7 @@ export default function BakeCard() {
                 RE-BAKE
               </Button>
             </Grid>
-            <Grid item flexGrow={1} marginLeft={1}>
+            <Grid item flexGrow={1} marginLeft={1} marginTop={3}>
               <Button
                 variant="contained"
                 color="secondary"
@@ -199,7 +209,7 @@ export default function BakeCard() {
                 EAT BEANS
               </Button>
             </Grid>
-          </Grid>
+          </ButtonContainer>
         </Box>
       </CardContent>
     </CardWrapper>
