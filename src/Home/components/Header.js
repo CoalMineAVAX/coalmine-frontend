@@ -6,7 +6,7 @@ import Connect from "./Connect";
 const Wrapper = styled("div")(({ theme }) => ({
   textAlign: "center",
   paddingBottom: 24,
-  [theme.breakpoints.down("sm")]: {
+  [theme.breakpoints.down("md")]: {
     h4: {
       fontSize: 20,
       margin: 0,

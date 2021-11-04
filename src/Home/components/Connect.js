@@ -12,6 +12,16 @@ const ConnectButton = styled(Button)(({ theme }) => ({
   },
 }));
 
+const SmallScreenConnectButton = styled(Button)(({ theme }) => ({
+  display: "none",
+  marginTop: -24,
+  marginBottom: 24,
+  width: "100%",
+  [theme.breakpoints.down("md")]: {
+    display: "block",
+  },
+}));
+
 export default function Connect({ responsive = true }) {
   const { address, loading, connect, disconnect } = useAuthContext();
 
@@ -25,14 +35,13 @@ export default function Connect({ responsive = true }) {
       {address ? "Disconnect" : "Connect"}
     </ConnectButton>
   ) : (
-    <Button
-      style={{ marginTop: -24, marginBottom: 24, width: "100%" }}
+    <SmallScreenConnectButton
       color="secondary"
       variant="contained"
       disabled={loading}
       onClick={() => (address ? disconnect() : connect())}
     >
       {address ? "Disconnect" : "Connect"}
-    </Button>
+    </SmallScreenConnectButton>
   );
 }
