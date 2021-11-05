@@ -22,7 +22,7 @@ const nutritionFacts = [
   },
   {
     label: "Dev Fee",
-    value: 5,
+    value: 3,
   },
 ];
 
