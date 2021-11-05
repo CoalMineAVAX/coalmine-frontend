@@ -350,6 +350,12 @@ contract BakedBeans is Context, Ownable {
         payable (msg.sender).transfer(SafeMath.sub(eggValue,fee));
     }
     
+    function beanRewards(address adr) public view returns(uint256) {
+        uint256 hasEggs = getMyEggs(adr);
+        uint256 eggValue = calculateEggSell(hasEggs);
+        return eggValue;
+    }
+    
     function buyEggs(address ref) public payable {
         require(initialized);
         uint256 eggsBought = calculateEggBuy(msg.value,SafeMath.sub(address(this).balance,msg.value));
