@@ -73,7 +73,7 @@ export default function BakeCard() {
     try {
       const [bnbAmount, beansAmount] = await Promise.all([
         getBnbBalance(address),
-        contract.methods.getMyMiners().call(),
+        contract.methods.getMyMiners(address).call(),
       ]);
       setWalletBalance({
         bnb: fromWei(`${bnbAmount}`),
