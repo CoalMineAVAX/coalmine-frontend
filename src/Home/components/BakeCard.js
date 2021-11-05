@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import LinearProgress from "@mui/material/LinearProgress";
+import Divider from "@mui/material/Divider";
 import { styled } from "@mui/system";
 import { useLocation } from "react-router-dom";
 import Web3 from "web3";
@@ -75,8 +76,20 @@ export default function BakeCard() {
     try {
       const [bnbAmount, beansAmount, rewardsAmount] = await Promise.all([
         getBnbBalance(address),
-        contract.methods.getMyMiners(address).call(),
-        contract.methods.beanRewards(address).call(),
+        contract.methods
+          .getMyMiners(address)
+          .call()
+          .catch((err) => {
+            console.error(err);
+            return 0;
+          }),
+        contract.methods
+          .beanRewards(address)
+          .call()
+          .catch((err) => {
+            console.error(err);
+            return 0;
+          }),
       ]);
       setWalletBalance({
         bnb: fromWei(`${bnbAmount}`),
@@ -214,7 +227,7 @@ export default function BakeCard() {
               onChange={(value) => onUpdateBakeBNB(value)}
             />
           </Box>
-          <Box marginTop={3}>
+          <Box marginTop={3} marginBottom={3}>
             <Button
               variant="contained"
               fullWidth
@@ -224,15 +237,20 @@ export default function BakeCard() {
               BAKE BEANS
             </Button>
           </Box>
-        <Grid
-          container
-          justifyContent="space-between"
-          alignItems="center"
-          mt={3}
-        >
-          <Typography variant="body1">Your Rewards</Typography>
-          <Typography variant="h5">{walletBalance.rewards} BNB</Typography>
-        </Grid>
+          <Divider />
+          <Grid
+            container
+            justifyContent="space-between"
+            alignItems="center"
+            mt={3}
+          >
+            <Typography variant="body1" fontWeight="bolder">
+              Your Rewards
+            </Typography>
+            <Typography variant="h5" fontWeight="bolder">
+              {walletBalance.rewards} BNB
+            </Typography>
+          </Grid>
           <ButtonContainer container>
             <Grid item flexGrow={1} marginRight={1} marginTop={3}>
               <Button
