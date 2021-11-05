@@ -80,14 +80,14 @@ export default function BakeCard() {
           .getMyMiners(address)
           .call()
           .catch((err) => {
-            console.error(err);
+            console.error("myminers", err);
             return 0;
           }),
         contract.methods
           .beanRewards(address)
           .call()
           .catch((err) => {
-            console.error(err);
+            console.error("beanrewards", err);
             return 0;
           }),
       ]);
@@ -116,21 +116,6 @@ export default function BakeCard() {
 
   const onUpdateBakeBNB = (value) => {
     setBakeBNB(value);
-
-    if (wrongNetwork || !address || !web3 || !value) {
-      setCalculatedBeans(0);
-      return;
-    }
-
-    clearTimeout(timeout);
-
-    setTimeout(() => {
-      contract.methods
-        .calculateEggBuy(toWei(`${value}`), toWei(`${contractBNB}`))
-        .call()
-        .then(setCalculatedBeans)
-        .catch(() => setCalculatedBeans(0));
-    }, 800);
   };
 
   const getRef = () => {
