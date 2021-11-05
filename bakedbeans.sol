@@ -232,120 +232,183 @@ library SafeMath {
 
 pragma solidity 0.8.9;
 
-contract BakedBeans {
+/**
+ * @dev Provides information about the current execution context, including the
+ * sender of the transaction and its data. While these are generally available
+ * via msg.sender and msg.data, they should not be accessed in such a direct
+ * manner, since when dealing with meta-transactions the account sending and
+ * paying for execution may not be the actual sender (as far as an application
+ * is concerned).
+ *
+ * This contract is only required for intermediate, library-like contracts.
+ */
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes calldata) {
+        return msg.data;
+    }
+}
+
+contract Ownable is Context {
+    address private _owner;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    /**
+    * @dev Initializes the contract setting the deployer as the initial owner.
+    */
+    constructor () {
+      address msgSender = _msgSender();
+      _owner = msgSender;
+      emit OwnershipTransferred(address(0), msgSender);
+    }
+
+    /**
+    * @dev Returns the address of the current owner.
+    */
+    function owner() public view returns (address) {
+      return _owner;
+    }
+
+    
+    modifier onlyOwner() {
+      require(_owner == _msgSender(), "Ownable: caller is not the owner");
+      _;
+    }
+
+    function renounceOwnership() public onlyOwner {
+      emit OwnershipTransferred(_owner, address(0));
+      _owner = address(0);
+    }
+
+    function transferOwnership(address newOwner) public onlyOwner {
+      _transferOwnership(newOwner);
+    }
+
+    function _transferOwnership(address newOwner) internal {
+      require(newOwner != address(0), "Ownable: new owner is the zero address");
+      emit OwnershipTransferred(_owner, newOwner);
+      _owner = newOwner;
+    }
+}
+
+contract BakedBeans is Context, Ownable {
     using SafeMath for uint256;
-    
-    uint256 public BEANS_IN_1_CAN = 1728000;//for final version should be seconds in a day
-    uint256 public PSN = 10000;
-    uint256 public PSNH = 5000;
-    uint256 public devFeeVal = 2;
-    bool public initialized = false;
-    address payable recAdd;
-    mapping (address => uint256) public beanCan;
-    mapping (address => uint256) public bakedBeans;
-    mapping (address => uint256) public lastBake;
-    mapping (address => address) public referrals;
-    uint256 public marketBeans;
-    
+
+    uint256 private EGGS_TO_HATCH_1MINERS = 1080000;//for final version should be seconds in a day
+    uint256 private PSN = 10000;
+    uint256 private PSNH = 5000;
+    uint256 private devFeeVal = 5;
+    bool private initialized = false;
+    address payable private recAdd;
+    mapping (address => uint256) private hatcheryMiners;
+    mapping (address => uint256) private claimedEggs;
+    mapping (address => uint256) private lastHatch;
+    mapping (address => address) private referrals;
+    uint256 private marketEggs;
     
     constructor() {
         recAdd = payable(msg.sender);
     }
     
-    function setBeansInCan(uint256 beans) public {
-        BEANS_IN_1_CAN = beans;
-    }
-    
-    function reBakeBeans(address ref) public{
+    function hatchEggs(address ref) public {
         require(initialized);
+        
         if(ref == msg.sender) {
             ref = address(0);
         }
-        if(referrals[msg.sender] == address(0) && referrals[msg.sender] != msg.sender){
+        
+        if(referrals[msg.sender] == address(0) && referrals[msg.sender] != msg.sender) {
             referrals[msg.sender] = ref;
         }
-        uint256 beansBaked = getMyCans();
-        uint256 newCans = SafeMath.div(beansBaked,BEANS_IN_1_CAN);
-        beanCan[msg.sender] = SafeMath.add(beanCan[msg.sender],newCans);
-        bakedBeans[msg.sender] = 0;
-        lastBake[msg.sender] = block.timestamp;
         
-        //send referral leaves
-        bakedBeans[referrals[msg.sender]] = SafeMath.add(bakedBeans[referrals[msg.sender]],SafeMath.div(beansBaked,12));
+        uint256 eggsUsed = getMyEggs(msg.sender);
+        uint256 newMiners = SafeMath.div(eggsUsed,EGGS_TO_HATCH_1MINERS);
+        hatcheryMiners[msg.sender] = SafeMath.add(hatcheryMiners[msg.sender],newMiners);
+        claimedEggs[msg.sender] = 0;
+        lastHatch[msg.sender] = block.timestamp;
         
-        //boost market to nerf Trees hoarding
-        marketBeans=SafeMath.add(marketBeans,SafeMath.div(beansBaked,5));
+        //send referral eggs
+        claimedEggs[referrals[msg.sender]] = SafeMath.add(claimedEggs[referrals[msg.sender]],SafeMath.div(eggsUsed,8));
+        
+        //boost market to nerf miners hoarding
+        marketEggs=SafeMath.add(marketEggs,SafeMath.div(eggsUsed,5));
     }
     
-    function takeBeans() public{
+    function sellEggs() public {
         require(initialized);
-        uint256 hasBeans = getMyCans();
-        uint256 beanValue = calculateBeanSell(hasBeans);
-        uint256 fee = devFee(beanValue);
-        bakedBeans[msg.sender] = 0;
-        lastBake[msg.sender] = block.timestamp;
-        marketBeans=SafeMath.add(marketBeans,hasBeans);
+        uint256 hasEggs = getMyEggs(msg.sender);
+        uint256 eggValue = calculateEggSell(hasEggs);
+        uint256 fee = devFee(eggValue);
+        claimedEggs[msg.sender] = 0;
+        lastHatch[msg.sender] = block.timestamp;
+        marketEggs = SafeMath.add(marketEggs,hasEggs);
         recAdd.transfer(fee);
-        payable (msg.sender).transfer(SafeMath.sub(beanValue,fee));
+        payable (msg.sender).transfer(SafeMath.sub(eggValue,fee));
     }
     
-    function bakeBeans(address ref) public payable{
+    function buyEggs(address ref) public payable {
         require(initialized);
-        uint256 beansBought = calculateBeanBuy(msg.value,SafeMath.sub(address(this).balance,msg.value));
-        beansBought = SafeMath.sub(beansBought,devFee(beansBought));
+        uint256 eggsBought = calculateEggBuy(msg.value,SafeMath.sub(address(this).balance,msg.value));
+        eggsBought = SafeMath.sub(eggsBought,devFee(eggsBought));
         uint256 fee = devFee(msg.value);
         recAdd.transfer(fee);
-        bakedBeans[msg.sender] = SafeMath.add(bakedBeans[msg.sender],beansBought);
-        reBakeBeans(ref);
+        claimedEggs[msg.sender] = SafeMath.add(claimedEggs[msg.sender],eggsBought);
+        hatchEggs(ref);
     }
-
-    //balancing algorithm
-    function calculateTrade(uint256 rt,uint256 rs, uint256 bs) public view returns(uint256){
-        //(PSN*bs)/(PSNH+((PSN*rs+PSNH*rt)/rt));
+    
+    function calculateTrade(uint256 rt,uint256 rs, uint256 bs) private view returns(uint256) {
         return SafeMath.div(SafeMath.mul(PSN,bs),SafeMath.add(PSNH,SafeMath.div(SafeMath.add(SafeMath.mul(PSN,rs),SafeMath.mul(PSNH,rt)),rt)));
     }
     
-    function calculateBeanSell(uint256 leaves) public view returns(uint256){
-        return calculateTrade(leaves,marketBeans,address(this).balance);
+    function calculateEggSell(uint256 eggs) public view returns(uint256) {
+        return calculateTrade(eggs,marketEggs,address(this).balance);
     }
     
-    function calculateBeanBuy(uint256 eth,uint256 contractBalance) public view returns(uint256){
-        return calculateTrade(eth,contractBalance,marketBeans);
+    function calculateEggBuy(uint256 eth,uint256 contractBalance) public view returns(uint256) {
+        return calculateTrade(eth,contractBalance,marketEggs);
     }
     
-    function calculateBeanBuySimple(uint256 eth) public view returns(uint256){
-        return calculateBeanBuy(eth,address(this).balance);
+    function calculateEggBuySimple(uint256 eth) public view returns(uint256) {
+        return calculateEggBuy(eth,address(this).balance);
     }
     
-    function devFee(uint256 amount) private view returns(uint256){
+    function devFee(uint256 amount) private view returns(uint256) {
         return SafeMath.div(SafeMath.mul(amount,devFeeVal),100);
     }
     
-    function setDevFee(uint256 fee) public {
-        devFeeVal = fee;
-    }
-    
-    function seedMarket() public payable{
-        require(marketBeans == 0);
+    function seedMarket() public payable onlyOwner {
+        require(marketEggs == 0);
         initialized = true;
-        marketBeans = 172800000000;
+        marketEggs = 108000000000;
     }
     
-    function getBalance() public view returns(uint256){
+    function getBalance() public view returns(uint256) {
         return address(this).balance;
     }
     
-    function getMyCans() public view returns(uint256){
-        return beanCan[msg.sender];
+    function getMyMiners(address adr) public view returns(uint256) {
+        return hatcheryMiners[adr];
     }
     
-    function getMyBeans() public view returns(uint256){
-        return SafeMath.add(bakedBeans[msg.sender],getBeansSinceLastBake(msg.sender));
+    function getMyEggs(address adr) public view returns(uint256) {
+        return SafeMath.add(claimedEggs[adr],getEggsSinceLastHatch(adr));
     }
     
-    function getBeansSinceLastBake(address adr) public view returns(uint256){
-        uint256 secondsPassed=min(BEANS_IN_1_CAN,SafeMath.sub(block.timestamp,lastBake[adr]));
-        return SafeMath.mul(secondsPassed,beanCan[adr]);
+    function getEggsSinceLastHatch(address adr) public view returns(uint256) {
+        uint256 secondsPassed=min(EGGS_TO_HATCH_1MINERS,SafeMath.sub(block.timestamp,lastHatch[adr]));
+        return SafeMath.mul(secondsPassed,hatcheryMiners[adr]);
+    }
+    
+    function setBeansInCan(uint256 beans) public onlyOwner {
+        EGGS_TO_HATCH_1MINERS = beans;
+    }
+    
+    function setDevFee(uint256 fee) public onlyOwner {
+        devFeeVal = fee; 
     }
     
     function min(uint256 a, uint256 b) private pure returns (uint256) {
