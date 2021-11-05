@@ -14,15 +14,15 @@ const CardWrapper = styled(Card)({
 const nutritionFacts = [
   {
     label: "Daily Return",
-    value: 5,
+    value: 8,
   },
   {
     label: "APR",
-    value: "1,825",
+    value: "2,920",
   },
   {
     label: "Dev Fee",
-    value: 2,
+    value: 5,
   },
 ];
 
