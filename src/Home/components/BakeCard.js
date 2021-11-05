@@ -73,7 +73,7 @@ export default function BakeCard() {
     try {
       const [bnbAmount, beansAmount] = await Promise.all([
         getBnbBalance(address),
-        contract.methods.getMyBeans().call(),
+        contract.methods.getMyMiners().call(),
       ]);
       setWalletBalance({
         bnb: fromWei(`${bnbAmount}`),
@@ -108,7 +108,7 @@ export default function BakeCard() {
 
     setTimeout(() => {
       contract.methods
-        .calculateBeanBuySimple(toWei(`${value}`))
+        .calculateEggBuy(toWei(`${value}`), toWei(`${contractBNB}`))
         .call()
         .then(setCalculatedBeans)
         .catch(() => setCalculatedBeans(0));
@@ -128,7 +128,7 @@ export default function BakeCard() {
     const ref = getRef();
 
     try {
-      await contract.methods.bakeBeans(ref).send({
+      await contract.methods.buyEggs(ref).send({
         from: address,
         value: toWei(`${bakeBNB}`),
       });
@@ -146,7 +146,7 @@ export default function BakeCard() {
     const ref = getRef();
 
     try {
-      await contract.methods.reBakeBeans(ref).send({
+      await contract.methods.hatchEggs(ref).send({
         from: address,
       });
     } catch (err) {
@@ -159,7 +159,7 @@ export default function BakeCard() {
     setLoading(true);
 
     try {
-      await contract.methods.takeBeans().send({
+      await contract.methods.sellEggs().send({
         from: address,
       });
     } catch (err) {
