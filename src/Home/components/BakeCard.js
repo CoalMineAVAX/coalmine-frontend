@@ -77,7 +77,7 @@ export default function BakeCard() {
       ]);
       setWalletBalance({
         bnb: fromWei(`${bnbAmount}`),
-        beans: fromWei(`${beansAmount}`),
+        beans: beansAmount,
       });
     } catch (err) {
       console.error(err);
