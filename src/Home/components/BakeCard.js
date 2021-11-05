@@ -45,6 +45,7 @@ export default function BakeCard() {
   const [walletBalance, setWalletBalance] = useState({
     bnb: 0,
     beans: 0,
+    rewards: 0,
   });
   const [bakeBNB, setBakeBNB] = useState(0);
   const [calculatedBeans, setCalculatedBeans] = useState(0);
@@ -66,24 +67,28 @@ export default function BakeCard() {
       setWalletBalance({
         bnb: 0,
         beans: 0,
+        rewards: 0,
       });
       return;
     }
 
     try {
-      const [bnbAmount, beansAmount] = await Promise.all([
+      const [bnbAmount, beansAmount, rewardsAmount] = await Promise.all([
         getBnbBalance(address),
         contract.methods.getMyMiners(address).call(),
+        contract.methods.beanRewards(address).call(),
       ]);
       setWalletBalance({
         bnb: fromWei(`${bnbAmount}`),
         beans: beansAmount,
+        rewards: fromWei(`${rewardsAmount}`),
       });
     } catch (err) {
       console.error(err);
       setWalletBalance({
         bnb: 0,
         beans: 0,
+        rewards: 0,
       });
     }
   };
@@ -219,6 +224,15 @@ export default function BakeCard() {
               BAKE BEANS
             </Button>
           </Box>
+        <Grid
+          container
+          justifyContent="space-between"
+          alignItems="center"
+          mt={3}
+        >
+          <Typography variant="body1">Your Rewards</Typography>
+          <Typography variant="h5">{walletBalance.rewards} BNB</Typography>
+        </Grid>
           <ButtonContainer container>
             <Grid item flexGrow={1} marginRight={1} marginTop={3}>
               <Button
