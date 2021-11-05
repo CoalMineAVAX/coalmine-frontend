@@ -216,7 +216,7 @@ export default function BakeCard() {
               disabled={wrongNetwork || !address || +bakeBNB === 0 || loading}
               onClick={bake}
             >
-              BAKE {calculatedBeans} BEANS
+              BAKE BEANS
             </Button>
           </Box>
           <ButtonContainer container>
