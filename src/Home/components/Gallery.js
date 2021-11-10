@@ -4,22 +4,70 @@ import "react-image-gallery/styles/css/image-gallery.css";
 
 const items = [
   {
-    original: "https://picsum.photos/id/300/300/200",
+    original: "/gallery/photo_2021-11-09_22-00-33.jpg",
   },
   {
-    original: "https://picsum.photos/id/301/300/200",
+    original: "/gallery/photo_2021-11-09_22-00-41.jpg",
   },
   {
-    original: "https://picsum.photos/id/302/300/200",
+    original: "/gallery/photo_2021-11-09_22-00-57.jpg",
   },
   {
-    original: "https://picsum.photos/id/304/300/200",
+    original: "/gallery/photo_2021-11-09_22-01-07.jpg",
   },
   {
-    original: "https://picsum.photos/id/305/300/200",
+    original: "/gallery/photo_2021-11-09_22-01-17.jpg",
   },
   {
-    original: "https://picsum.photos/id/306/300/200",
+    original: "/gallery/photo_2021-11-09_22-01-41.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-17.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-25.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-28.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-31.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-33.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-40.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-44.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-49.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-52.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-56.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-02-59.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-03-01.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-03-04.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-03-08.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-03-11.jpg",
+  },
+  {
+    original: "/gallery/photo_2021-11-09_22-03-13.jpg",
   },
 ];
 
