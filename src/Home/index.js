@@ -7,6 +7,9 @@ import NutritionFacts from "./components/NutritionFacts";
 import ReferralLink from "./components/ReferralLink";
 import { useAuthContext } from "../providers/AuthProvider";
 import Footer from "./components/Footer";
+import FAQs from "./components/FAQ";
+import Gallery from "./components/Gallery";
+import TwitterFeed from "./components/TwitterFeed";
 
 const Wrapper = styled("div")(({ theme }) => ({
   maxWidth: 400,
@@ -23,9 +26,12 @@ export default function Home() {
     <Wrapper>
       <Connect />
       <Header />
+      <Gallery />
       <BakeCard />
       <NutritionFacts />
       <ReferralLink address={address} />
+      <TwitterFeed />
+      <FAQs />
       <Footer />
     </Wrapper>
   );

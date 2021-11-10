@@ -29,3 +29,17 @@ code {
   height: 100%;
   overflow: auto;
 }
+
+.scrollbox {
+  overflow-y: scroll;
+}
+
+.scrollbox::-webkit-scrollbar {
+  background-color: transparent;
+  width: 8px;
+}
+
+.scrollbox::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
