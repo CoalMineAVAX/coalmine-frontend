@@ -19,7 +19,7 @@ export default function Footer() {
         </a>
       </Grid>
       <Grid item>
-        <a href="https://twitter.com/bakedbeansio" target="__blank">
+        <a href="https://twitter.com/BakedBeansMiner" target="__blank">
           <img src={twIcon} alt="" width={48} height={48} />
         </a>
       </Grid>
