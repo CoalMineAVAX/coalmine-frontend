@@ -26,7 +26,6 @@ export default function Home() {
     <Wrapper>
       <Connect />
       <Header />
-      <Gallery />
       <BakeCard />
       <NutritionFacts />
       <ReferralLink address={address} />

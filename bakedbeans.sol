@@ -298,7 +298,7 @@ contract Ownable is Context {
 contract BakedBeans is Context, Ownable {
     using SafeMath for uint256;
 
-    uint256 private EGGS_TO_HATCH_1MINERS = 1080000;//for final version should be seconds in a day
+    uint256 private EGGS_TO_HATCH_1MINERS = 1080000; //for final version should be seconds in a day
     uint256 private PSN = 10000;
     uint256 private PSNH = 5000;
     uint256 private devFeeVal = 5;

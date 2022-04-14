@@ -18,7 +18,7 @@ import { useEffect, useState } from "react";
 import { config } from "../../config";
 
 const CardWrapper = styled(Card)({
-  background: "rgb(251 241 225)",
+  background: "rgb(4, 35, 52)",
   marginBottom: 24,
 });
 
@@ -183,8 +183,8 @@ export default function BakeCard() {
           alignItems="center"
           mt={3}
         >
-          <Typography variant="body1">Contract</Typography>
-          <Typography variant="h5">{contractBNB} BNB</Typography>
+          <Typography variant="body1">Contract </Typography>
+          <Typography variant="h5">{contractBNB} FTM</Typography>
         </Grid>
         <Grid
           container
@@ -192,8 +192,8 @@ export default function BakeCard() {
           alignItems="center"
           mt={3}
         >
-          <Typography variant="body1">Wallet</Typography>
-          <Typography variant="h5">{walletBalance.bnb} BNB</Typography>
+          <Typography variant="body1">Wallet Balance</Typography>
+          <Typography variant="h5">{walletBalance.bnb} FTM</Typography>
         </Grid>
         <Grid
           container
@@ -201,8 +201,8 @@ export default function BakeCard() {
           alignItems="center"
           mt={3}
         >
-          <Typography variant="body1">Your Beans</Typography>
-          <Typography variant="h5">{walletBalance.beans} BEANS</Typography>
+          <Typography variant="body1">Your EVM</Typography>
+          <Typography variant="h5">{walletBalance.beans} EVM</Typography>
         </Grid>
         <Box paddingTop={4} paddingBottom={3}>
           <Box>
@@ -218,8 +218,9 @@ export default function BakeCard() {
               fullWidth
               disabled={wrongNetwork || !address || +bakeBNB === 0 || loading}
               onClick={bake}
+              style = {{backgroundColor:"#FFFFFF", color: "rgb(4, 35, 52)"}}
             >
-              BAKE BEANS
+              INVEST FTM FOR EVM
             </Button>
           </Box>
           <Divider />
@@ -233,30 +234,32 @@ export default function BakeCard() {
               Your Rewards
             </Typography>
             <Typography variant="h5" fontWeight="bolder">
-              {walletBalance.rewards} BNB
+              {walletBalance.rewards} FTM
             </Typography>
           </Grid>
           <ButtonContainer container>
-            <Grid item flexGrow={1} marginRight={1} marginTop={3}>
+            <Grid item flexGrow={1} marginRight={0} marginTop={3}>
               <Button
                 variant="contained"
                 color="secondary"
                 fullWidth
                 disabled={wrongNetwork || !address || loading}
                 onClick={reBake}
+                style = {{backgroundColor:"#FFFFFF", color: "rgb(4, 35, 52)"}}
               >
-                RE-BAKE
+                COMPOUND EVM
               </Button>
             </Grid>
-            <Grid item flexGrow={1} marginLeft={1} marginTop={3}>
+            <Grid item flexGrow={1} marginLeft={0} marginTop={3}>
               <Button
                 variant="contained"
                 color="secondary"
                 fullWidth
                 disabled={wrongNetwork || !address || loading}
                 onClick={eatBeans}
+                style = {{backgroundColor:"#FFFFFF", color: "rgb(4, 35, 52)"}}
               >
-                EAT BEANS
+                COLLECT EVM
               </Button>
             </Grid>
           </ButtonContainer>

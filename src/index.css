@@ -13,9 +13,10 @@ body {
 
   background: radial-gradient(
     circle at top right,
-    rgba(23, 33, 94, 0.9) 0%,
-    #f2b04f 25%
+    rgba(19, 181, 236, 0) 0%,
+    #dfe7f2    25%
   );
+
   background-position: top right;
   background-repeat: no-repeat;
 }

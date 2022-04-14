@@ -35,6 +35,7 @@ export default function FAQs() {
         fullWidth
         onClick={handleOpen}
         startIcon={<QuestionAnswer />}
+        style = {{backgroundColor: "rgb(4, 35, 52)"}}
       >
         FAQs
       </Button>
@@ -48,10 +49,10 @@ export default function FAQs() {
           <Grid container spacing={2} direction="column" position="relative">
             {faqs.map((faq, index) => (
               <Grid item key={faq.q}>
-                <Typography variant="h5" gutterBottom>
+                <Typography variant="h5" color="#000000" gutterBottom>
                   {index + 1}: {faq.q}
                 </Typography>
-                <Typography variant="body1">{faq.a}</Typography>
+                <Typography variant="body1" color="#000000">{faq.a}</Typography>
               </Grid>
             ))}
             <IconButton

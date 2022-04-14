@@ -6,7 +6,7 @@ const theme = createTheme({
       main: "#17215E",
     },
     secondary: {
-      main: "#f4b52d",
+      main: "rgb(4, 35, 52)",
     },
     text: {
       primary: "#17215E",
@@ -21,7 +21,7 @@ const theme = createTheme({
       fontSize: 16,
     },
     allVariants: {
-      color: "#17215E",
+      color: "#FFFFFF",
     },
     h4: {
       fontWeight: 600,
@@ -52,7 +52,7 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 8,
-          fontWeight: 400,
+          fontWeight: 600,
           fontSize: "1.2rem",
           padding: "10px",
           minWidth: 138,
@@ -61,7 +61,7 @@ const theme = createTheme({
           boxShadow: "6px 6px 20px 6px #00000096",
         },
         containedSecondary: {
-          color: "#17215E",
+          color: "#FFFFFF",
         },
       },
     },
