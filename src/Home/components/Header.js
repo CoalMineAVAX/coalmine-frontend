@@ -20,10 +20,10 @@ export default function Header() {
       <img src={logo} alt="" width={"100%"} style={{ marginTop: 20, marginBottom: 20 }} />
       <Connect responsive={false} />
       <Typography variant="h6" marginTop={-3} color="#17215E">
-        The FTM Reward Pool with the tastiest daily return and lowest dev fee
+        The AVAX Reward Pool with the tastiest daily return and lowest dev fee
       </Typography>
       <Typography variant="h6" color="#17215E" style={{fontWeight: "600"}} >
-        Brought to you by EVM Staker
+        Brought to you by CoalMine
       </Typography>
     </Wrapper>
   );

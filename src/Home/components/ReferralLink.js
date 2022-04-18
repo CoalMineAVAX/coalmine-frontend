@@ -36,7 +36,7 @@ export default function ReferralLink({ address }) {
           marginTop={2}
           paddingX={3}
         >
-          Earn 12% of the FTM used to Mine EVM from anyone who uses your
+          Earn 12% of the AVAX used to Mine COAL from anyone who uses your
           referral link
         </Typography>
       </CardContent>

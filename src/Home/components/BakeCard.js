@@ -184,7 +184,7 @@ export default function BakeCard() {
           mt={3}
         >
           <Typography variant="body1">Contract </Typography>
-          <Typography variant="h5">{contractBNB} FTM</Typography>
+          <Typography variant="h5">{contractBNB} AVAX</Typography>
         </Grid>
         <Grid
           container
@@ -193,7 +193,7 @@ export default function BakeCard() {
           mt={3}
         >
           <Typography variant="body1">Wallet Balance</Typography>
-          <Typography variant="h5">{walletBalance.bnb} FTM</Typography>
+          <Typography variant="h5">{walletBalance.bnb} AVAX</Typography>
         </Grid>
         <Grid
           container
@@ -201,8 +201,8 @@ export default function BakeCard() {
           alignItems="center"
           mt={3}
         >
-          <Typography variant="body1">Your EVM</Typography>
-          <Typography variant="h5">{walletBalance.beans} EVM</Typography>
+          <Typography variant="body1">Your COAL</Typography>
+          <Typography variant="h5">{walletBalance.beans} COAL</Typography>
         </Grid>
         <Box paddingTop={4} paddingBottom={3}>
           <Box>
@@ -220,7 +220,7 @@ export default function BakeCard() {
               onClick={bake}
               style = {{backgroundColor:"#FFFFFF", color: "rgb(4, 35, 52)"}}
             >
-              INVEST FTM FOR EVM
+              INVEST AVAX FOR COAL
             </Button>
           </Box>
           <Divider />
@@ -234,7 +234,7 @@ export default function BakeCard() {
               Your Rewards
             </Typography>
             <Typography variant="h5" fontWeight="bolder">
-              {walletBalance.rewards} FTM
+              {walletBalance.rewards} AVAX
             </Typography>
           </Grid>
           <ButtonContainer container>
@@ -247,7 +247,7 @@ export default function BakeCard() {
                 onClick={reBake}
                 style = {{backgroundColor:"#FFFFFF", color: "rgb(4, 35, 52)"}}
               >
-                COMPOUND EVM
+                BUY MORE MINERS (COMPOUND)
               </Button>
             </Grid>
             <Grid item flexGrow={1} marginLeft={0} marginTop={3}>
@@ -259,7 +259,7 @@ export default function BakeCard() {
                 onClick={eatBeans}
                 style = {{backgroundColor:"#FFFFFF", color: "rgb(4, 35, 52)"}}
               >
-                COLLECT EVM
+                COLLECT COALS
               </Button>
             </Grid>
           </ButtonContainer>
