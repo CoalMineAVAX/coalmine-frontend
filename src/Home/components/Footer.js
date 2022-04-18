@@ -14,12 +14,12 @@ export default function Footer() {
         </a>
       </Grid>
       <Grid item>
-        <a href="https://t.me/EVM_Staker" target="__blank">
+        <a href="/" target="__blank">
           <img src={tgIcon} alt="" width={48} height={48} />
         </a>
       </Grid>
       <Grid item>
-        <a href="https://twitter.com/EVM_Staker" target="__blank">
+        <a href="/" target="__blank">
           <img src={twIcon} alt="" width={48} height={48} />
         </a>
       </Grid>
