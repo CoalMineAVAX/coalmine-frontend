@@ -25,7 +25,7 @@ const providerOptions = {
     package: WalletConnectProvider, // required
     options: {
       rpc: {
-        43114: "https://rpc.ankr.com/avalanche",
+        250: "https://rpc.fantom.network",
         97: "https://data-seed-prebsc-1-s1.binance.org:8545/",
       },
       network: "Fantom Mainnet",

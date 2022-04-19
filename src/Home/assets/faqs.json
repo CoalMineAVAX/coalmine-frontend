@@ -1,11 +1,11 @@
 [
   {
-    "q": "What happens when I Invest AVAX?",
-    "a": "When you invest your AVAX, your AVAX gets locked into the CoalMine smart contract and rewards you with 8% daily return every day."
+    "q": "What happens when I Invest FTM?",
+    "a": "When you invest your FTM, your FTM gets locked into the CoalMine smart contract and rewards you with 8% daily return every day."
   },
   {
-    "q": "Can I take my initial AVAX back?",
-    "a": "Over Time! COAL are not bought, COALs are mined therefore they can't be sold. Once COALs are mined they work for you indefinitely, providing you with an unlimited amount of AVAX at a starting rate of 8% daily."
+    "q": "Can I take my initial FTM back?",
+    "a": "Over Time! COAL are not bought, COALs are mined therefore they can't be sold. Once COALs are mined they work for you indefinitely, providing you with an unlimited amount of FTM at a starting rate of 8% daily."
   },
   {
     "q": "How much are my fees?",
@@ -33,6 +33,6 @@
   },
   {
     "q": "How do referrals work?",
-    "a": "Once your Metamask is connected to the CoalMine website, you will notice your referral address appear at the bottom of the page. When a new user hires miners after clicking your personal referral link, the contract will send a AVAX value equal to 12% instantly to your mining COAL. Be smart, use it to Mine COAL and build yourself a stream of income."
+    "a": "Once your Metamask is connected to the CoalMine website, you will notice your referral address appear at the bottom of the page. When a new user hires miners after clicking your personal referral link, the contract will send a FTM value equal to 12% instantly to your mining COAL. Be smart, use it to Mine COAL and build yourself a stream of income."
   }
 ]

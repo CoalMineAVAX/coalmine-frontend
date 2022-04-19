@@ -1,6 +1,6 @@
 export const config = {
-  chainId: 43114,
-  contractAddress: "0xD67dC8D8DBf9fda921ddD17aF0b2Cc20C8504263",
+  chainId: 250,
+  contractAddress: "0x3E2b33CEf94D412d9F33A235b49D9D658F1B039f",
   scanLink:
-    "https://snowtrace.io/address/0xD67dC8D8DBf9fda921ddD17aF0b2Cc20C8504263#code",
+    "https://ftmscan.com/address/0x3E2b33CEf94D412d9F33A235b49D9D658F1B039f#code",
 };

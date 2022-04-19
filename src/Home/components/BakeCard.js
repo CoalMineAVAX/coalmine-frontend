@@ -184,7 +184,7 @@ export default function BakeCard() {
           mt={3}
         >
           <Typography variant="body1">Contract </Typography>
-          <Typography variant="h5">{contractBNB} AVAX</Typography>
+          <Typography variant="h5">{contractBNB} FTM</Typography>
         </Grid>
         <Grid
           container
@@ -193,7 +193,7 @@ export default function BakeCard() {
           mt={3}
         >
           <Typography variant="body1">Wallet Balance</Typography>
-          <Typography variant="h5">{walletBalance.bnb} AVAX</Typography>
+          <Typography variant="h5">{walletBalance.bnb} FTM</Typography>
         </Grid>
         <Grid
           container
@@ -220,7 +220,7 @@ export default function BakeCard() {
               onClick={bake}
               style = {{backgroundColor:"#FFFFFF", color: "rgb(4, 35, 52)"}}
             >
-              INVEST AVAX FOR COAL
+              INVEST FTM FOR COAL
             </Button>
           </Box>
           <Divider />
@@ -234,7 +234,7 @@ export default function BakeCard() {
               Your Rewards
             </Typography>
             <Typography variant="h5" fontWeight="bolder">
-              {walletBalance.rewards} AVAX
+              {walletBalance.rewards} FTM
             </Typography>
           </Grid>
           <ButtonContainer container>
